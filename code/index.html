@@ -3,58 +3,41 @@
 	
 	<head>
 		<title>elo</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
 		<meta name="description" content="">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css" />
+		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css"/>
+		<link rel="stylesheet" href="assets/styles.css"/>
 		<script type="text/javascript" src="libs/modernizr/modernizr.custom.89143.js"></script> <!-- Modernizr must be attached in the head -->	
-		<script src="http://requirejs.org/docs/release/2.1.4/minified/require.js" data-main="com/controllers/RequireJSConfig"></script>
+		<script src="http://requirejs.org/docs/release/2.1.4/minified/require.js" data-main="RequireJSConfig"></script>
 	</head>
 	
 	<body>
-
-		<div id="categories" data-role="page" data-title="Categories">
-
-			<div data-role="header">
-				<h1>Categories</h1>
-			</div><!-- /header -->
-
-			<div data-role="content">
-				<h2>Select a Category Below:</h2>
-				<ul data-role="listview" data-inset="true">
-					<li>
-						<a href="#category?animals" class="animals">Animals</a>
-					</li>
-					<li>
-						<a href="#category?colors" class="colors">Colors</a>
-					</li>
-					<li>
-						<a href="#category?vehicles" class="vehicles">Vehicles</a>
-					</li>
-				</ul>
-			</div><!-- /content -->
-
-		</div>
-
+		
+		<!-- placeholder landing page -->
+		<div data-role="page"></div>
+		
+		<!--
 		<div id="animals" data-role="page" data-title="Animals">
 
 			<div data-role="header">
 				<h1>Animals</h1>
-			</div><!-- /header -->
+			</div>
 
 			<div data-role="content">
 				<ul data-role="listview" data-inset="true"></ul>
-			</div><!-- /content -->
+			</div>
 		</div>
 
 		<div id="colors" data-role="page" data-title="Colors">
 
 			<div data-role="header">
 				<h1>Colors</h1>
-			</div><!-- /header -->
+			</div>
 
 			<div data-role="content">
 				<ul data-role="listview" data-inset="true"></ul>
-			</div><!-- /content -->
+			</div>
 
 		</div>
 
@@ -62,26 +45,14 @@
 
 			<div data-role="header">
 				<h1>Vehicles</h1>
-			</div><!-- /header -->
+			</div>
 
 			<div data-role="content">
 				<ul data-role="listview" data-inset="true"></ul>
-			</div><!-- /content -->
+			</div>
 
 		</div>
-
-		<!-- Underscore Template that is used to display all of the Category Models -->
-		<script id="categoryItems" type="text/template">
-
-			<% _.each( collection.toJSON(), function( category, id ) { %>
-
-			<li class="ui-li ui-li-static ui-btn-up-c ui-corner-top">
-				<%= category.type %>
-			</li>
-
-			<% }); %>
-
-		</script>
+		-->
 
 	</body>
 </html>

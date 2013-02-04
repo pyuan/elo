@@ -1,4 +1,4 @@
-// Category Model
+// Model
 // ==============
 
 // Includes file dependencies

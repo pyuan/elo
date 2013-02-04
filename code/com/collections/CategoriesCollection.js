@@ -6,10 +6,10 @@ define([
 		
 		"jquery",
 		"backbone",
-		"com/models/CategoryModel" 
+		"com/models/Model", 
 		
-	], function( $, Backbone, CategoryModel ) {
-
+	], function( $, Backbone, Model ) {
+		
     // Extends Backbone.Router
     var Collection = Backbone.Collection.extend( {
 
@@ -22,7 +22,7 @@ define([
         },
 
         // Sets the Collection model property to be a Category Model
-        model: CategoryModel,
+        model: Model,
 
         // Sample JSON data that in a real app will most likely come from a REST web service
         jsonArray: [
@@ -92,7 +92,6 @@ define([
 
     } );
 
-    // Returns the Model class
     return Collection;
 
 } );

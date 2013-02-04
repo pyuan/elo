@@ -6,14 +6,14 @@ define([
 	
 		"jquery",
 		"backbone", 
-		"com/models/CategoryModel", 
+		"com/models/Model", 
 		"com/collections/CategoriesCollection", 
-		"com/views/CategoryView" 
+		"com/views/CategoryView",
 	
-	], function( $, Backbone, CategoryModel, CategoriesCollection, CategoryView ) {
+	], function( $, Backbone, Model, CategoriesCollection, CategoryView ) {
 
     // Extends Backbone.Router
-    var CategoryRouter = Backbone.Router.extend( {
+    var MobileRouter = Backbone.Router.extend( {
 
         // The Router constructor
         initialize: function() {
@@ -29,7 +29,7 @@ define([
 
             // Tells Backbone to start watching for hashchange events
             Backbone.history.start();
-
+            
         },
 
         // Backbone.js Routes
@@ -83,9 +83,9 @@ define([
 
         }
 
-    } );
+    });
 
     // Returns the Router class
-    return CategoryRouter;
+    return MobileRouter;
 
 } );

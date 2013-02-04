@@ -6,10 +6,11 @@ define([
 		
 		"jquery", 
 		"backbone",
-		"com/models/CategoryModel" 
+		"templateutils",
+		"com/models/Model", 
 	
-	], function( $, Backbone, Handlebars, CategoryModel ) {
-
+	], function( $, Backbone, TemplateUtils, Model ) {
+		
     // Extends Backbone.View
     var CategoryView = Backbone.View.extend( {
 
@@ -23,12 +24,17 @@ define([
 
         // Renders all of the Category models on the UI
         render: function() {
-        	
-            // Sets the view's template property
-            this.template = _.template( $( "script#categoryItems" ).html(), { "collection": this.collection } );
-
-            // Renders the view's template inside of the current listview element
-            this.$el.find("ul").html(this.template);
+            
+            var self = this;
+            var categories = [];
+            for(var i in this.collection.models) {
+            	var model = this.collection.models[i];
+            	categories.push( {type: model.get("type")} );
+            }
+            var params = { categories: categories };
+            TemplateUtils.getTemplate("list_item", params, function(html){
+            	self.$el.find("ul").html(html).listview("refresh");
+            });
 
             // Maintains chainability
             return this;
