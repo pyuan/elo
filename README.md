@@ -5,4 +5,4 @@ A jQuery mobile, backbone.js and require.js application boiler plate based on th
 
 Template 1 uses require.js and follows the AMD model
 
-Template 2 loads in all the scripts up front synchronously and emulates a merged script for he most part
+Template 2 loads in all the scripts up front synchronously and essentially emulates loading in a merged script for the most part
