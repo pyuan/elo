@@ -1,4 +1,4 @@
-var Collection = Backbone.Collection.extend( {
+var CategoriesCollection = Backbone.Collection.extend({
 
     // The Collection constructor
     initialize: function( models, options ) {
@@ -8,8 +8,8 @@ var Collection = Backbone.Collection.extend( {
 
     },
 
-    // Sets the Collection model property to be a Category Model
-    model: Model,
+    // Sets the Collection model property to be a CategoryModel
+    model: CategoryModel,
 
     // Sample JSON data that in a real app will most likely come from a REST web service
     jsonArray: [
@@ -63,7 +63,6 @@ var Collection = Backbone.Collection.extend( {
         });
 
         // Calls the options.success method and passes an array of objects (Internally saves these objects as models to the current collection)
-        //options.success( categories );
         self.reset(categories);
 
         // Triggers the custom `added` method (which the Category View listens for)

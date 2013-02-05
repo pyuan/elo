@@ -52,7 +52,7 @@ ApplicationController.prototype._onPageShow = function(event, data)
 
 /**
  * call on every pagebeforeload event
- * initialize view class associated with the page being loaded
+ * dynamically initialize view class associated with the page being loaded
  * @param event
  * @paramd data
  */
@@ -61,21 +61,18 @@ ApplicationController.prototype._onPageLoad = function(event, data)
 	var page = $("div[data-role=page]").last();
 	if(page)
 	{
-		var pageClass = $(page).attr("data-class");
+		var pageClassName = $(page).attr("data-class");
 	
 		//process params from url and pass to new page
 		var d;
-		if(data && data.url.indexOf("?") != -1) {
-			var start = data.url.indexOf("?") + 1;
-			d = $.deserialize(data.url.substring(start));
+		if(data && data.dataUrl.indexOf("?") != -1) {
+			var start = data.dataUrl.indexOf("?") + 1;
+			d = $.deserialize(data.dataUrl.substring(start));
 		}
 		
-		if(pageClass) {
-			console.log(PageView);
-			var PageClass = window[pageClass];
-			console.log(pageClass);
-			console.log(PageClass);
-			//this.currentPage = new PageClass( {el: page, data: d} );
+		if(pageClassName) {
+			var PageClass = window[pageClassName];
+			this.currentPage = new PageClass( {el: page, data: d} );
 		}
 	}
 }

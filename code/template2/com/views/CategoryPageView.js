@@ -14,6 +14,18 @@ var CategoryPageView = PageView.extend({
 		this.collection.on( "added", this.render, this );
 		this.collection.fetch(); //triggers render
 		console.log("Category view initialized: " + this._category);
+		
+		//TODO: examples of adding page event listeners
+		var self = this;
+		this.$el.on("pagebeforeshow", function(){
+			console.log(self._category + " pagebeforeshow");
+		}).on("pageshow", function(){
+			console.log(self._category + " pageshow");
+		}).on("pagebeforehide", function(){
+			console.log(self._category + " pagebeforehide");
+		}).on("pagehide", function(){
+			console.log(self._category + " pagehide");
+		});
     },
 
     /**
