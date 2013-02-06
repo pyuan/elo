@@ -19,11 +19,23 @@ define([
          */
         initialize: function() 
         {
+        	PageView.prototype.initialize.call(this); //calling base class initialize method
+        	
         	this._category = this.options.data["category"];
         	this.collection = new CategoriesCollection( [] , { type: this._category } );
 			this.collection.on( "added", this.render, this );
-			this.collection.fetch(); //triggers render
 			console.log("Category view initialized: " + this._category);
+        },
+        
+        /**
+         * handler before the page is shown
+         * extending super class method
+         * render the view
+         * @param event
+         * @param data
+         */
+        _onPageBeforeShow: function(event, data) {
+        	this.collection.fetch(); //triggers render
         },
 
         /**

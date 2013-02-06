@@ -11,9 +11,8 @@ require.config({
 		"jqm" : "http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min",
 		"underscore" : "http://underscorejs.org/underscore-min",
 		"backbone" : "http://backbonejs.org/backbone-min",
-		//TODO: needs to be fixed, because it's used on index page so dir is diff
-		"handlebars" : "../libs/handlebars/handlebars",  
-		"deserialize" : "libs/jquery.deserialize/jquery.deserialize",
+		"handlebars" : "../libs/handlebars/handlebars",
+		"deserialize" : "libs/jquery.deserialize/jquery.deserialize", //path is different because it's used on the index page 
 
 	},
 
@@ -34,7 +33,7 @@ require.config({
 		},
 		"deserialize" : ["jquery"],
 
-	} // end Shim Configuration
+	} 
 
 });
 
@@ -45,71 +44,48 @@ require([
 		"jqm",
 		"backbone", 
 		"deserialize",
-		//"com/routers/MobileRouter", 
 	
-	], function($, JQM, Backbone, Deserialize/*, Mobile*/) {
-	
-	$(document).on("mobileinit",
-		// Set up the "mobileinit" handler before requiring jQuery Mobile's module
-		function() {
-			// Prevents all anchor click handling including the addition of active button state and alternate link bluring.
-			//$.mobile.linkBindingEnabled = false;
-	
-			// Disabling this will prevent jQuery Mobile from handling hash changes
-			//$.mobile.hashListeningEnabled = false;
-			
-			console.log("Mobile init");
-			
-	}).trigger("mobileinit");
-	
-	/*
-	//for subpages layout
-	require([
-			"jquerymobile",
-		], function() {
-		// Instantiates a new Backbone.js Mobile Router
-		this.router = new Mobile();
-	});
-	*/
+	], function($, JQM, Backbone, Deserialize) {
 	
 	/**
 	 * when the page loads, load the class associate with the page
 	 */
-	$(document).on("pageload", function(event, data){
+	$(document).on("pagebeforecreate", function(event, data){
 		var page = $("div[data-role=page]").last();
 		if(page)
 		{
-			var pageClass = $(page).attr("data-class");
+			var pageClassName = $(page).attr("data-class");
 		
 			//process params from url and pass to new page
 			var d;
-			if(data && data.dataUrl.indexOf("?") != -1) {
-				var start = data.dataUrl.indexOf("?") + 1;
-				d = $.deserialize(data.dataUrl.substring(start));
+			var url = event.target.baseURI; //data && data.dataUrl
+			if(url.indexOf("?") != -1) {
+				var start = url.indexOf("?") + 1;
+				d = $.deserialize(url.substring(start));
 			}
 			
-			/*
-			if(event.currentTarget.baseURI.indexOf("?") != -1) {
-				var start = event.currentTarget.baseURI.indexOf("?") + 1;
-				d = $.deserialize(event.currentTarget.baseURI.substring(start));
-			}
-			*/
-			
-			if(pageClass)
+			if(pageClassName)
 			{
-				require([pageClass], function(PageClass){
+				console.log("Initializing " + pageClassName);
+				require([pageClassName], function(PageClass){
 					this.currentPage = new PageClass( {el: page, data: d} );
+					
+					/**
+					 * manually trigger pagebeforeshow event to account for timing issue with
+					 * AMD retrieving scripts asynchronously 
+					 */ 
+					$(page).trigger("pagebeforeshow");  
 				});
 			}
 		}
-	}).trigger("pageload"); //trigger for the initial page
+	}); 
 	
 	/**
 	 * redirect to landing page which is located in a subdir
 	 */
 	$(document).on("pageshow", function(event, data){
-		if(event.currentTarget.URL.indexOf(".html") == -1){
-			//go to landing page
+		if(event.currentTarget.URL.indexOf(".html") == -1)
+		{
 			$.mobile.changePage("pages/categories.html", {transition: "pop"});
 		}
 	}).trigger("pageshow");

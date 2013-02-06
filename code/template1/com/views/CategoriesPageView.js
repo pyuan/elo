@@ -10,16 +10,6 @@ define([
     var CategoriesPageView = PageView.extend( {
 
         /**
-         * The View Constructor
-         * @param el, DOM element of the page
-         */
-        initialize: function() 
-        {
-			//this.collection.on( "added", this.render, this );
-			this.render();
-        },
-
-        /**
          * Renders all of the Category models on the UI
          * called whenever the collection is changed for this view
          * @param none
