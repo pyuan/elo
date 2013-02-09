@@ -4,25 +4,20 @@ require.config({
 	// 3rd party script alias names 
 	paths : {
 		
-		"com" : "../com",
-		"templateutils" : "../com/utils/TemplateUtils",
-		
-		"jquery" : "https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min",
-		"jqm" : "http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min",
-		"underscore" : "http://underscorejs.org/underscore-min",
-		"backbone" : "http://backbonejs.org/backbone-min",
-		"handlebars" : "../libs/handlebars/handlebars",
-		"deserialize" : "libs/jquery.deserialize/jquery.deserialize", //path is different because it's used on the index page 
+		"jquery" : "libs/jquery/jquery.1.8.2.min",
+		"jqm" : "libs/jquery.mobile/jquery.mobile-1.2.0.min",
+		"deserialize" : "libs/jquery.deserialize/jquery.deserialize",  
+		"underscore" : "libs/underscore/underscore-min",
+		"backbone" : "libs/backbone/backbone-min",
+		"handlebars" : "libs/handlebars/handlebars",
+		"com" : "com",
+		"templateutils" : "com/utils/TemplateUtils",
 
 	},
 
 	// Sets the configuration for your third party scripts that are not AMD compatible
 	shim : {
 		
-		"jqm" : {
-			"deps" : ["jquery"],
-			"exports" : "JQM"
-		},
 		"backbone" : {
 			"deps" : ["underscore", "jquery"],
 			"exports" : "Backbone" //attaches "Backbone" to the window object
@@ -31,6 +26,7 @@ require.config({
 			"deps" : ["jquery"],
 			"exports" : "Handlebars"
 		},
+		"jqm" : ["jquery"],
 		"deserialize" : ["jquery"],
 
 	} 
@@ -42,53 +38,50 @@ require([
 	
 		"jquery", 
 		"jqm",
-		"backbone", 
+		"backbone",
 		"deserialize",
+		"com/models/Constants",
 	
-	], function($, JQM, Backbone, Deserialize) {
+	], function($, JQM, Backbone, Deserialize, Constants) {
 	
-	/**
-	 * when the page loads, load the class associate with the page
-	 */
-	$(document).on("pagebeforecreate", function(event, data){
-		var page = $("div[data-role=page]").last();
-		if(page)
-		{
-			var pageClassName = $(page).attr("data-class");
+	
+	require( Constants.VIEW_CLASSES, function(){
 		
-			//process params from url and pass to new page
-			var d;
-			var url = event.target.baseURI; //data && data.dataUrl
-			if(url.indexOf("?") != -1) {
-				var start = url.indexOf("?") + 1;
-				d = $.deserialize(url.substring(start));
-			}
-			
-			if(pageClassName)
-			{
-				console.log("Initializing " + pageClassName);
-				require([pageClassName], function(PageClass){
-					this.currentPage = new PageClass( {el: page, data: d} );
-					
-					/**
-					 * manually trigger pagebeforeshow event to account for timing issue with
-					 * AMD retrieving scripts asynchronously 
-					 */ 
-					$(page).trigger("pagebeforeshow");  
-				});
-			}
-		}
-	}); 
-	
-	/**
-	 * redirect to landing page which is located in a subdir
-	 */
-	$(document).on("pageshow", function(event, data){
-		if(event.currentTarget.URL.indexOf(".html") == -1)
+		var viewClasses = {};
+		for(var i=0; i<Constants.VIEW_CLASSES.length; i++)
 		{
-			$.mobile.changePage("pages/categories.html", {transition: "pop"});
+			var className = Constants.VIEW_CLASSES[i];
+			viewClasses[className] = arguments[i];
 		}
-	}).trigger("pageshow");
+		
+		/**
+		 * when the page loads, load the class associate with the page
+		 * and trigger for to initialize the landing page
+		 */
+		$(document).on("pagebeforecreate", function(event, data){
+			var page = $("div[data-role=page]").last();
+			if(page)
+			{
+				var pageClassName = $(page).attr("data-class");
+			
+				//process params from url and pass to new page
+				var d;
+				var url = event.target.baseURI; //data && data.dataUrl
+				if(url.indexOf("?") != -1) {
+					var start = url.indexOf("?") + 1;
+					d = $.deserialize(url.substring(start));
+				}
+				
+				if(pageClassName)
+				{
+					console.log("Initializing " + pageClassName);
+					var PageClass = viewClasses[pageClassName];
+					this.currentPage = new PageClass( {el: page, data: d} );
+				}
+			}
+		}).trigger("pagebeforecreate"); 
+		
+	});
 	
 }); 
 

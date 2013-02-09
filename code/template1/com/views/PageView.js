@@ -10,61 +10,11 @@ define([
 
         /**
          * The View Constructor
-         * setup listeners for page events
          * @param el, DOM element of the page
          */
-        initialize: function() 
-        {
-			var self = this;
-			this.$el.on("pagebeforehide", function(event, data){
-				self._onPageBeforeHide(event, data);
-				//console.log("pagebeforehide");
-			}).on("pagehide", function(event, data){
-				self._onPageHide(event, data);
-				//console.log("pagehide");
-			}).on("pagebeforeshow", function(event, data){
-				self._onPageBeforeShow(event, data);
-				//console.log("pagebeforeshow");
-			}).on("pageshow", function(event, data){
-				self._onPageShow(event, data);
-				//console.log("pageshow");
-			});
+        initialize: function() {
+			this.render();
         },
-        
-        /**
-         * handler before the page is shown
-         * to be extended in child classes
-         * render the view
-         * @param event
-         * @param data
-         */
-        _onPageBeforeShow: function(event, data) {
-        	this.render();
-        },
-        
-        /**
-         * handler when the page is shown
-         * to be extended in child classes
-         * @param event
-         * @param data
-         */
-        _onPageShow: function(event, data) {},
-        
-        /**
-         * handler before the page is hidden
-         * to be extended in child classes
-         * @param event
-         * @param data
-         */
-        _onPageBeforeHide: function(event, data) {},
-        
-        /**
-         * handler when the page is hidden
-         * to be extended in child classes
-         * @param event
-         * @param data
-         */
-        _onPageHide: function(event, data) {},
 
         /**
          * Renders all of the Category models on the UI

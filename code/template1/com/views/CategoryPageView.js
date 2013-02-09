@@ -19,18 +19,27 @@ define([
          */
         initialize: function() 
         {
-        	PageView.prototype.initialize.call(this); //calling base class initialize method
-        	
         	this._category = this.options.data["category"];
         	this.collection = new CategoriesCollection( [] , { type: this._category } );
 			this.collection.on( "added", this.render, this );
 			console.log("Category view initialized: " + this._category);
+			
+			/**
+			 * example showing how to bind to page events, 'pagebeforecreate' cant be bound 
+			 * because it's used to initialize this view class
+			 */
+			var self = this;
+			this.$el.on("pagebeforecreate pagecreate pageinit pagebeforehide pagehide pageremove pagebeforeshow pageshow", function(event, data){
+				console.log(self._category + " " + event.type);
+			});
+			
+			this.$el.on("pagebeforeshow", function(event, data){
+				self._onPageBeforeShow(event, data);
+			});
         },
         
         /**
-         * handler before the page is shown
-         * extending super class method
-         * render the view
+         * handler for the pagebeforeshow event
          * @param event
          * @param data
          */

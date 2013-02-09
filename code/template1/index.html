@@ -6,7 +6,9 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0"/>
 		<meta name="description" content="">
-		<link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.0/jquery.mobile-1.2.0.min.css"/>
+		<link rel="stylesheet" href="libs/jquery.mobile/jquery.mobile-1.2.0.min.css"/>
+		<link rel="stylesheet" href="libs/jquery.mobile/jquery.mobile.structure-1.2.0.min.css"/>
+		<link rel="stylesheet" href="libs/jquery.mobile/jquery.mobile.theme-1.2.0.min.css"/>
 		<link rel="stylesheet" href="assets/styles.css"/>
 		<script type="text/javascript" src="libs/modernizr/modernizr.custom.89143.js"></script> <!-- Modernizr must be attached in the head -->	
 		<script src="http://requirejs.org/docs/release/2.1.4/minified/require.js" data-main="RequireJSConfig"></script>
@@ -14,8 +16,32 @@
 	
 	<body>
 		
-		<!-- placeholder landing page -->
-		<div data-role="page"></div>
+		<!-- landing page -->
+		<div id="categories" data-role="page" data-title="Categories" data-class="com/views/CategoriesPageView">
+
+			<div data-role="header">
+				<h1>Categories</h1>
+			</div>
+		
+			<div data-role="content">
+				<h2>Select a Category Below:</h2>
+				<ul data-role="listview" data-inset="true">
+					<li>
+						<a href="#" class="category" id="animals">Animals</a>
+					</li>
+					<li>
+						<a href="#" class="category" id="colors">Colors</a>
+					</li>
+					<li>
+						<a href="#" class="category" id="vehicles">Vehicles</a>
+					</li>
+					<li>
+						<a href="page2.html" data-transition="slide">Page 2</a>
+					</li>
+				</ul>
+			</div>
+		
+		</div>
 
 	</body>
 </html>
