@@ -14,6 +14,11 @@ define([
          */
         initialize: function() {
 			this.render();
+			
+			var self = this;
+			this.$el.on("pagebeforehide", function(event, data){
+				self.dispose();
+			});
         },
 
         /**
@@ -24,6 +29,12 @@ define([
         render: function() {
             return this; //Maintains chainability
         },
+        
+        /**
+         * do any cleanup here, called when page is about to be hidden
+         * @param none
+         */
+        dispose: function(){},
 
     } );
 
